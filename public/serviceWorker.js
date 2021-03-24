@@ -1,17 +1,16 @@
 const FILES_TO_CACHE = [
     '/',
     '/index.html',
-    '/favicon.ico',
-    '/manifest.webmanifest',
-    '/style.css',
-    '/icons/icon-192x192.png',
-    '/icons/icon-152x512.png',
     '/index.js',
+    // '/manifest.webmanifest',
+    '/style.css',
+    // '/icons/icon-192x192.png',
+    // '/icons/icon-152x512.png',
     '/db.js'
   ];
   
-  const STATIC_CACHE = "static-cache-v1";
-  const RUNTIME_CACHE = "runtime-cache";
+  const STATIC_CACHE = "static-cache-v2";
+  const RUNTIME_CACHE = "data-cache-v1";
   
   self.addEventListener("install", event => {
     event.waitUntil(

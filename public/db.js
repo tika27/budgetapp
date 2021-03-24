@@ -2,9 +2,8 @@ let db;
 
 const request = indexedDB.open('budget', 1);
 
-request.onupgradeneeded = event => {
+request.onupgradeneeded =  function (event) {
     const db = event.target.result;
-
     db.createObjectStore('pending', { autoIncrement: true })
 };
 
@@ -12,30 +11,28 @@ request.onsuccess = (event) => {
     db = event.target.result
 
     if (navigator.onLine) {
-        checkResultBase()
+        checkResultBase();
     }
 };
 
 request.onerror = (event) => {
-    console.log(event.target.errorCode)
-}
+    console.log(event.target.errorCode);
+};
 
 const saveRecord = (record) => {
-    const transaction = db.transaction(['pending'], 'readwrite')
+    const transaction = db.transaction(["pending"], "readwrite")
 
-    const store = transaction.objectStore('pending')
+    const store = transaction.objectStore("pending")
 
     store.add(record)
 }
 
-const checkResultBase = () => {
-    const transaction = db.transaction(['pending'], 'readwrite')
-
+const checkResultBase= () => {
+    const transaction = db.transaction(['pending'], 'readwrite');
     const store = transaction.objectStore('pending')
-
     const getAll = store.getAll()
 
-    getAll.onsuccess = () => {
+    getAll.onsuccess = function() {
         if (getAll.result.length > 0) {
             fetch('/api/transaction/bulk', {
                 method: "POST",
@@ -48,9 +45,7 @@ const checkResultBase = () => {
                 .then(response => response.json())
                 .then(() => {
                     const transaction = db.transaction(['pending'], 'readwrite')
-
                     const store = transaction.objectStore('pending')
-
                     store.clear()
                 });
         }
